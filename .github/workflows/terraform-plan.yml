@@ -1,0 +1,139 @@
+name: terraform-plan
+
+# Runs on every pull request that touches Terraform. Static checks need no
+# cloud access; the plan authenticates to Google Cloud through Workload
+# Identity Federation as the read-only tf-plan service account.
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "envs/**"
+      - "modules/**"
+      - ".github/workflows/terraform-*.yml"
+      - ".tflint.hcl"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: terraform-plan-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  TF_VERSION: "1.9.8"
+  TF_IN_AUTOMATION: "true"
+  TF_INPUT: "false"
+  WORKING_DIR: envs/poc
+
+jobs:
+  static-checks:
+    name: Format, lint and security scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      - name: terraform fmt
+        run: terraform fmt -check -recursive -diff
+
+      - name: terraform validate (modules, envs and bootstrap, no backend)
+        run: |
+          for dir in modules/* envs/* bootstrap; do
+            echo "::group::validate $dir"
+            terraform -chdir="$dir" init -backend=false -input=false
+            terraform -chdir="$dir" validate
+            echo "::endgroup::"
+          done
+
+      - uses: terraform-linters/setup-tflint@v4
+
+      - name: tflint
+        run: |
+          tflint --init --config "$GITHUB_WORKSPACE/.tflint.hcl"
+          tflint --recursive --config "$GITHUB_WORKSPACE/.tflint.hcl"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Checkov security scan
+        uses: bridgecrewio/checkov-action@v12
+        with:
+          directory: .
+          framework: terraform
+          config_file: .checkov.yml
+          # Report findings without blocking the PoC; set to false once the skip list is agreed.
+          soft_fail: true
+
+  plan:
+    name: Plan (poc)
+    needs: static-checks
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write        # needed to request the GitHub OIDC token for WIF
+      pull-requests: write   # needed to comment the plan on the PR
+    defaults:
+      run:
+        working-directory: ${{ env.WORKING_DIR }}
+    env:
+      TF_VAR_project_id: ${{ vars.GCP_PROJECT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud (WIF, read-only)
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.GCP_WIF_PROVIDER }}
+          service_account: ${{ vars.GCP_PLAN_SA }}
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+          terraform_wrapper: false
+
+      - name: terraform init
+        run: terraform init -backend-config="bucket=${{ vars.TF_STATE_BUCKET }}"
+
+      - name: terraform validate
+        run: terraform validate -no-color
+
+      - name: terraform plan
+        id: plan
+        run: |
+          set -o pipefail
+          terraform plan -lock-timeout=5m -no-color -out=tfplan | tee plan.txt
+
+      - name: Comment plan on the pull request
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const raw = fs.readFileSync('${{ env.WORKING_DIR }}/plan.txt', 'utf8');
+            const plan = raw.length > 60000 ? raw.slice(-60000) : raw;
+            const marker = '<!-- terraform-plan-poc -->';
+            const body = `${marker}\n### Terraform plan: envs/poc\n\n<details><summary>Show plan</summary>\n\n\`\`\`terraform\n${plan}\n\`\`\`\n</details>`;
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner, repo: context.repo.repo, issue_number: context.issue.number,
+            });
+            const existing = comments.find(c => c.body.includes(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner, repo: context.repo.repo, comment_id: existing.id, body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner, repo: context.repo.repo, issue_number: context.issue.number, body,
+              });
+            }
+
+      - name: Upload plan output
+        uses: actions/upload-artifact@v4
+        with:
+          name: plan-poc
+          path: ${{ env.WORKING_DIR }}/plan.txt
+          retention-days: 14
