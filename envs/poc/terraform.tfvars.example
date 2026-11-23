@@ -1,0 +1,20 @@
+# Copy to terraform.tfvars and adjust. terraform.tfvars is git-ignored.
+
+project_id  = "giveplease-ai-reports"
+region      = "asia-southeast1"
+environment = "poc"
+
+# Defaults to "<project_id>-landing" when left out.
+# landing_bucket_name = "giveplease-ai-reports-landing"
+
+landing_retention_days    = 30
+loader_service_account_id = "gp-loader"
+
+# Optional: read access for a data-admins group. Leave commented until a group is named.
+# data_admin_group = "data-admins@example.com"
+
+# Optional: monthly budget alert. Needs billing access on the billing account.
+enable_budget = false
+# billing_account_id = "XXXXXX-XXXXXX-XXXXXX"
+# budget_amount      = 250
+# budget_currency    = "USD"

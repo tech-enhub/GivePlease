@@ -1,0 +1,63 @@
+[
+  {
+    "name": "load_id",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": "One id per load run"
+  },
+  {
+    "name": "table_name",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": "BigQuery table that was loaded"
+  },
+  {
+    "name": "source_file",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Excel workbook name"
+  },
+  {
+    "name": "source_sheet",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Sheet name in the workbook"
+  },
+  {
+    "name": "gcs_uri",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "CSV file location in the landing bucket"
+  },
+  {
+    "name": "rows_in_source",
+    "type": "INTEGER",
+    "mode": "NULLABLE",
+    "description": "Data rows in the sheet, excluding the header"
+  },
+  {
+    "name": "rows_loaded",
+    "type": "INTEGER",
+    "mode": "NULLABLE",
+    "description": "Rows that arrived in BigQuery"
+  },
+  {
+    "name": "status",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "LOADED, FAILED or MISMATCH"
+  },
+  {
+    "name": "message",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Error or note"
+  },
+  {
+    "name": "loaded_at",
+    "type": "TIMESTAMP",
+    "mode": "REQUIRED",
+    "defaultValueExpression": "CURRENT_TIMESTAMP()",
+    "description": "When the load finished"
+  }
+]

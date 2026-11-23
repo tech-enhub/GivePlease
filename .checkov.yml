@@ -1,0 +1,14 @@
+# Checkov security scan settings used by the terraform-plan workflow.
+# Each skipped check has a reason; review them before production.
+framework:
+  - terraform
+compact: true
+quiet: true
+skip-check:
+  # Bucket access logging: not needed for a PoC landing bucket; Cloud Audit Logs record access.
+  - CKV_GCP_62
+  # Customer-managed encryption keys: the PoC uses Google-managed keys by decision.
+  - CKV_GCP_81
+  - CKV_GCP_80
+  # Landing bucket versioning: files are short-lived copies; the state bucket is versioned.
+  - CKV_GCP_78

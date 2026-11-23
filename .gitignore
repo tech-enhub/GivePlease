@@ -1,0 +1,15 @@
+# Local Terraform working files
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+*.tfplan
+tfplan
+
+# Variable values can hold IDs and emails; commit only the example
+terraform.tfvars
+*.auto.tfvars
+
+# Keep the provider lock file under version control
+!.terraform.lock.hcl

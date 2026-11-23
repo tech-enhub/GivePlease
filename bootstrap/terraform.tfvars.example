@@ -1,0 +1,11 @@
+# Copy to terraform.tfvars and set the repository. terraform.tfvars is git-ignored.
+
+project_id         = "giveplease-ai-reports"
+region             = "asia-southeast1"
+github_repository  = "tech-enhub/GivePlease"   # must match the repository name exactly, including case
+github_environment = "poc"
+
+# Defaults: <project_id>-tfstate, github-pool, github-oidc
+# state_bucket_name = "giveplease-ai-reports-tfstate"
+# pool_id           = "github-pool"
+# provider_id       = "github-oidc"
