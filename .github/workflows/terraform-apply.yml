@@ -1,0 +1,67 @@
+name: terraform-apply
+
+# Applies envs/poc after a pull request is merged to main, or when started by
+# hand. The job runs in the "poc" GitHub environment: protect it with required
+# reviewers so every apply needs an approval. Only jobs in that environment can
+# impersonate the tf-apply service account (enforced in bootstrap/main.tf).
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "envs/**"
+      - "modules/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Never run two applies at the same time, and never cancel one half way.
+concurrency:
+  group: terraform-apply-poc
+  cancel-in-progress: false
+
+env:
+  TF_VERSION: "1.9.8"
+  TF_IN_AUTOMATION: "true"
+  TF_INPUT: "false"
+  WORKING_DIR: envs/poc
+
+jobs:
+  apply:
+    name: Apply (poc)
+    runs-on: ubuntu-latest
+    environment: poc
+    permissions:
+      contents: read
+      id-token: write   # needed to request the GitHub OIDC token for WIF
+    defaults:
+      run:
+        working-directory: ${{ env.WORKING_DIR }}
+    env:
+      TF_VAR_project_id: ${{ vars.GCP_PROJECT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud (WIF, apply)
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.GCP_WIF_PROVIDER }}
+          service_account: ${{ vars.GCP_APPLY_SA }}
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+          terraform_wrapper: false
+
+      - name: terraform init
+        run: terraform init -backend-config="bucket=${{ vars.TF_STATE_BUCKET }}"
+
+      - name: terraform plan
+        run: terraform plan -lock-timeout=5m -no-color -out=tfplan
+
+      - name: terraform apply
+        run: terraform apply -lock-timeout=5m -no-color -auto-approve tfplan
+
+      - name: Outputs
+        run: terraform output -no-color
