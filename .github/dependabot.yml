@@ -1,0 +1,15 @@
+version: 2
+updates:
+  # Keep the GitHub Actions used in the workflows up to date.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+
+  # Propose Google provider updates for each root module (lock file).
+  - package-ecosystem: terraform
+    directories:
+      - /envs/poc
+      - /bootstrap
+    schedule:
+      interval: weekly
