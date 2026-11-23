@@ -2,7 +2,7 @@
 
 project_id         = "giveplease-ai-reports"
 region             = "asia-southeast1"
-github_repository  = "tech-enhub/givePlease"   # must match the repository name exactly, including case
+github_repository  = "tech-enhub/giveplease"   # must match the repository name exactly, including case
 github_environment = "poc"
 
 # Defaults: <project_id>-tfstate, github-pool, github-oidc
