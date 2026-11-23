@@ -41,7 +41,7 @@ jobs:
     env:
       TF_VAR_project_id: ${{ vars.GCP_PROJECT_ID }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Authenticate to Google Cloud (WIF, apply)
         uses: google-github-actions/auth@v2
