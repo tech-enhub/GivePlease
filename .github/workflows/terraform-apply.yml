@@ -40,6 +40,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Show GitHub OIDC claims (temporary debug)
+        run: |
+          curl -sS -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=debug-only" \
+          | python3 -c "import sys,json,base64; t=json.load(sys.stdin)['value'].split('.')[1]; t+='='*(-len(t)%4); c=json.loads(base64.urlsafe_b64decode(t)); print(json.dumps({k:c.get(k) for k in ['sub','repository','repository_owner','environment','ref','job_workflow_ref']}, indent=2))"
+
+
       - name: Authenticate to Google Cloud (WIF, apply)
         uses: google-github-actions/auth@v2
         with:
