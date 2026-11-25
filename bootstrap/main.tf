@@ -26,18 +26,18 @@ locals {
 
   # Least-privilege roles for each CI identity on the project.
   plan_project_roles = toset([
-    "roles/viewer",                          # read resources for refresh
-    "roles/iam.securityReviewer",            # read IAM policies on project, buckets and datasets
-    "roles/bigquery.metadataViewer",         # read dataset and table metadata
+    "roles/viewer",                            # read resources for refresh
+    "roles/iam.securityReviewer",              # read IAM policies on project, buckets and datasets
+    "roles/bigquery.metadataViewer",           # read dataset and table metadata
     "roles/serviceusage.serviceUsageConsumer", # needed by user_project_override
   ])
 
   apply_project_roles = toset([
-    "roles/serviceusage.serviceUsageAdmin",  # enable APIs
+    "roles/serviceusage.serviceUsageAdmin", # enable APIs
     "roles/serviceusage.serviceUsageConsumer",
-    "roles/storage.admin",                   # landing bucket and its IAM
-    "roles/bigquery.admin",                  # datasets, tables and dataset IAM
-    "roles/iam.serviceAccountAdmin",         # loader service account
+    "roles/storage.admin",           # landing bucket and its IAM
+    "roles/bigquery.admin",          # datasets, tables and dataset IAM
+    "roles/iam.serviceAccountAdmin", # loader service account
   ])
 }
 

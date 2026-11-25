@@ -16,7 +16,7 @@ variable "datasets" {
   }))
 
   validation {
-    condition     = alltrue([for id in keys(var.datasets) : can(regex("^[A-Za-z0-9_]{1,1024}$", id))])
+    condition     = alltrue([for id in keys(var.datasets) : can(regex("^[A-Za-z0-9_]+$", id)) && length(id) <= 1024])
     error_message = "Dataset IDs may contain only letters, digits and underscores."
   }
 }

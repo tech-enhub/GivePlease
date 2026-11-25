@@ -6,8 +6,8 @@ provider "google" {
   billing_project       = var.project_id
 
   default_labels = {
-    project     = "giveplease-poc"
-    component   = "terraform-bootstrap"
-    managed_by  = "terraform"
+    project    = "giveplease-poc"
+    component  = "terraform-bootstrap"
+    managed_by = "terraform"
   }
 }
