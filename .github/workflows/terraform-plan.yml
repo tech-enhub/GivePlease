@@ -7,11 +7,6 @@ name: terraform-plan
 on:
   pull_request:
     branches: [main]
-    paths:
-      - "envs/**"
-      - "modules/**"
-      - ".github/workflows/terraform-*.yml"
-      - ".tflint.hcl"
   workflow_dispatch:
 
 permissions:

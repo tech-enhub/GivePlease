@@ -8,10 +8,7 @@ name: terraform-apply
 on:
   push:
     branches: [main]
-    paths:
-      - "envs/**"
-      - "modules/**"
-  workflow_dispatch:
+      workflow_dispatch:
 
 permissions:
   contents: read
