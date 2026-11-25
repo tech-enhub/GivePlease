@@ -5,7 +5,7 @@ Creates the BigQuery PoC data landing zone in the existing project `giveplease-a
 ## Layout
 
 ```
-terraform/                          (in tech-enhub/GivePlease; .github/ and pre-commit sit at the repository root)
+terraform/                          (in tech-enhub/giveplease; .github/ and pre-commit sit at the repository root)
 ├── bootstrap/                      run once by a person: state bucket, Workload Identity Federation, CI service accounts
 ├── modules/                        reusable building blocks, no provider or backend config
 │   ├── gcs-landing-bucket/         private bucket: uniform access, public access blocked, delete-after-N-days rule
@@ -71,7 +71,7 @@ The Workload Identity provider also rejects tokens from any other repository (`a
 2. **Bootstrap** (as tech@enhub.ai, in Cloud Shell):
    ```bash
    cd terraform/bootstrap
-   cp terraform.tfvars.example terraform.tfvars    # github_repository is already tech-enhub/GivePlease
+   cp terraform.tfvars.example terraform.tfvars    # github_repository is already tech-enhub/giveplease
    terraform init
    terraform plan -out=tfplan && terraform apply tfplan
    terraform output github_variables
