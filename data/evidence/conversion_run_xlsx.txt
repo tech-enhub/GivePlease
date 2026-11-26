@@ -1,0 +1,11 @@
+OK  normal_donors              source  45337  output  45337  rejected    0  age {'valid': 13919, 'unknown': 31415, 'out_of_range': 3}
+OK  normal_donors_filtered     source  45337  output  45337  rejected    0  age {'valid': 13919, 'unknown': 31415, 'out_of_range': 3}
+OK  normal_donors_ndwn         source  27592  output  27592  rejected    0  age {'unknown': 19111, 'valid': 8463, 'out_of_range': 18}
+OK  normal_donors_ndwa         source   9356  output   9356  rejected    0  age {'unknown': 8207, 'valid': 1149}
+OK  onbehalf_deceased          source     32  output     32  rejected    0  age {'unknown': 24, 'valid': 8}
+OK  onbehalf_without_nric      source    147  output    147  rejected    0  age {'valid': 147}
+OK  onbehalf_without_address   source    146  output    146  rejected    0  age {'valid': 131, 'unknown': 15}
+OK  anonymous_donors           source      1  output      1  rejected    0  age -
+
+PASS: 8 tables, 127948 rows -> out/20261126T1300
+exit=0

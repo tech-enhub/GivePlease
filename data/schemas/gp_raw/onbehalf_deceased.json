@@ -1,0 +1,92 @@
+[
+  {
+    "name": "unique_id",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": "Donor identifier from the source export. Kept as text so prefixes and leading zeros survive."
+  },
+  {
+    "name": "receipt_no",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": "Receipt number from the source export. Kept as text so leading zeros survive."
+  },
+  {
+    "name": "age",
+    "type": "INT64",
+    "mode": "NULLABLE",
+    "description": "Donor age in years. NULL when the source value is 0 (unknown) or outside the valid range; see age_status."
+  },
+  {
+    "name": "age_raw",
+    "type": "INT64",
+    "mode": "NULLABLE",
+    "description": "Age exactly as supplied, before validation. Kept so the age rule can change without a re-load."
+  },
+  {
+    "name": "age_status",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": "valid | unknown (source value 0 or blank) | out_of_range (negative or above the valid maximum)."
+  },
+  {
+    "name": "donation_amount_2019",
+    "type": "NUMERIC",
+    "mode": "NULLABLE",
+    "description": "Total donated in calendar year 2019, in SGD (assumed currency; confirm)."
+  },
+  {
+    "name": "donation_amount_2020",
+    "type": "NUMERIC",
+    "mode": "NULLABLE",
+    "description": "Total donated in calendar year 2020, in SGD (assumed currency; confirm)."
+  },
+  {
+    "name": "donation_amount_2021",
+    "type": "NUMERIC",
+    "mode": "NULLABLE",
+    "description": "Total donated in calendar year 2021, in SGD (assumed currency; confirm)."
+  },
+  {
+    "name": "donation_amount_2022",
+    "type": "NUMERIC",
+    "mode": "NULLABLE",
+    "description": "Total donated in calendar year 2022, in SGD (assumed currency; confirm)."
+  },
+  {
+    "name": "donation_amount_2023",
+    "type": "NUMERIC",
+    "mode": "NULLABLE",
+    "description": "Total donated in calendar year 2023, in SGD (assumed currency; confirm)."
+  },
+  {
+    "name": "donation_amount_2024",
+    "type": "NUMERIC",
+    "mode": "NULLABLE",
+    "description": "Total donated in calendar year 2024, in SGD (assumed currency; confirm)."
+  },
+  {
+    "name": "donation_amount_2025",
+    "type": "NUMERIC",
+    "mode": "NULLABLE",
+    "description": "Total donated in calendar year 2025, in SGD (assumed currency; confirm)."
+  },
+  {
+    "name": "donation_amount_2026",
+    "type": "NUMERIC",
+    "mode": "NULLABLE",
+    "description": "Total donated in calendar year 2026, in SGD (assumed currency; confirm)."
+  },
+  {
+    "name": "_source_row",
+    "type": "INT64",
+    "mode": "REQUIRED",
+    "description": "Row number in the source sheet (header is row 1), for tracing a value back to the export."
+  },
+  {
+    "name": "_load_id",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": "Load batch identifier; matches gp_audit.load_log.load_id and the landing-bucket folder."
+  }
+]

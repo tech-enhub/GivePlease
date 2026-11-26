@@ -24,6 +24,7 @@ Repository root:
 │   ├── dependabot.yml                  weekly updates for actions and the Google provider
 │   └── pull_request_template.md
 ├── .pre-commit-config.yaml  .editorconfig  README.md
+├── data/                           gp_raw load kit: table map, BigQuery schemas, sheet-to-CSV conversion, tests (see data/README.md)
 └── terraform/
 ```
 

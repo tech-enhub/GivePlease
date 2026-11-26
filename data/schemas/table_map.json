@@ -1,0 +1,294 @@
+{
+  "_about": "Single source of truth for the gp_raw load. Maps each source sheet to a BigQuery table and each source column to a typed BigQuery column. Edit this file (not the generated schema JSON) when the lead answers D-02, D-03 or D-07, then run scripts/make_schemas.py.",
+  "dataset": "gp_raw",
+  "defaults": {
+    "include_address": false,
+    "age_valid_min": 1,
+    "age_valid_max": 110,
+    "money_scale": 2
+  },
+  "column_rules": {
+    "Unique ID": {
+      "name": "unique_id",
+      "type": "STRING",
+      "mode": "REQUIRED",
+      "kind": "id",
+      "description": "Donor identifier from the source export. Kept as text so prefixes and leading zeros survive."
+    },
+    "ReceiptNo": {
+      "name": "receipt_no",
+      "type": "STRING",
+      "mode": "REQUIRED",
+      "kind": "id",
+      "description": "Receipt number from the source export. Kept as text so leading zeros survive."
+    },
+    "Address": {
+      "name": "address",
+      "type": "STRING",
+      "mode": "NULLABLE",
+      "kind": "address",
+      "description": "Postal address. Personal data: loaded only if include_address is true (RAID D-02)."
+    },
+    "Age": {
+      "name": "age",
+      "type": "INT64",
+      "mode": "NULLABLE",
+      "kind": "age",
+      "description": "Donor age in years. NULL when the source value is 0 (unknown) or outside the valid range; see age_status."
+    },
+    "AGE": {
+      "name": "age",
+      "type": "INT64",
+      "mode": "NULLABLE",
+      "kind": "age",
+      "description": "Donor age in years. NULL when the source value is 0 (unknown) or outside the valid range; see age_status."
+    },
+    "Donation Amount  (2019)": {
+      "name": "donation_amount_2019",
+      "type": "NUMERIC",
+      "mode": "NULLABLE",
+      "kind": "money",
+      "description": "Total donated in calendar year 2019, in SGD (assumed currency; confirm)."
+    },
+    "Donation Amount  (2020)": {
+      "name": "donation_amount_2020",
+      "type": "NUMERIC",
+      "mode": "NULLABLE",
+      "kind": "money",
+      "description": "Total donated in calendar year 2020, in SGD (assumed currency; confirm)."
+    },
+    "Donation Amount  (2021)": {
+      "name": "donation_amount_2021",
+      "type": "NUMERIC",
+      "mode": "NULLABLE",
+      "kind": "money",
+      "description": "Total donated in calendar year 2021, in SGD (assumed currency; confirm)."
+    },
+    "Donation Amount  (2022)": {
+      "name": "donation_amount_2022",
+      "type": "NUMERIC",
+      "mode": "NULLABLE",
+      "kind": "money",
+      "description": "Total donated in calendar year 2022, in SGD (assumed currency; confirm)."
+    },
+    "Donation Amount  (2023)": {
+      "name": "donation_amount_2023",
+      "type": "NUMERIC",
+      "mode": "NULLABLE",
+      "kind": "money",
+      "description": "Total donated in calendar year 2023, in SGD (assumed currency; confirm)."
+    },
+    "Donation Amount  (2024)": {
+      "name": "donation_amount_2024",
+      "type": "NUMERIC",
+      "mode": "NULLABLE",
+      "kind": "money",
+      "description": "Total donated in calendar year 2024, in SGD (assumed currency; confirm)."
+    },
+    "Donation Amount  (2025)": {
+      "name": "donation_amount_2025",
+      "type": "NUMERIC",
+      "mode": "NULLABLE",
+      "kind": "money",
+      "description": "Total donated in calendar year 2025, in SGD (assumed currency; confirm)."
+    },
+    "Donation Amount  (2026)": {
+      "name": "donation_amount_2026",
+      "type": "NUMERIC",
+      "mode": "NULLABLE",
+      "kind": "money",
+      "description": "Total donated in calendar year 2026, in SGD (assumed currency; confirm)."
+    }
+  },
+  "derived_columns": {
+    "age": [
+      {
+        "name": "age_raw",
+        "type": "INT64",
+        "mode": "NULLABLE",
+        "description": "Age exactly as supplied, before validation. Kept so the age rule can change without a re-load."
+      },
+      {
+        "name": "age_status",
+        "type": "STRING",
+        "mode": "REQUIRED",
+        "description": "valid | unknown (source value 0 or blank) | out_of_range (negative or above the valid maximum)."
+      }
+    ]
+  },
+  "load_columns": [
+    {
+      "name": "_source_row",
+      "type": "INT64",
+      "mode": "REQUIRED",
+      "description": "Row number in the source sheet (header is row 1), for tracing a value back to the export."
+    },
+    {
+      "name": "_load_id",
+      "type": "STRING",
+      "mode": "REQUIRED",
+      "description": "Load batch identifier; matches gp_audit.load_log.load_id and the landing-bucket folder."
+    }
+  ],
+  "tables": [
+    {
+      "sheet": "Vendor - Normal Donors Export",
+      "table": "normal_donors",
+      "include": true,
+      "id_prefix": "UID-NDV",
+      "description": "Normal donors, full export.",
+      "source_columns": [
+        "Unique ID",
+        "Address",
+        "Age",
+        "Donation Amount  (2019)",
+        "Donation Amount  (2020)",
+        "Donation Amount  (2021)",
+        "Donation Amount  (2022)",
+        "Donation Amount  (2023)",
+        "Donation Amount  (2024)",
+        "Donation Amount  (2025)",
+        "Donation Amount  (2026)"
+      ]
+    },
+    {
+      "sheet": "Vendor - Normal Donors (Filtere",
+      "table": "normal_donors_filtered",
+      "include": true,
+      "id_prefix": "UID-NDF",
+      "description": "Normal donors, filtered copy. Identical to normal_donors apart from the ID prefix: load only one of the two into curated views (RAID D-07).",
+      "source_columns": [
+        "Unique ID",
+        "Address",
+        "Age",
+        "Donation Amount  (2019)",
+        "Donation Amount  (2020)",
+        "Donation Amount  (2021)",
+        "Donation Amount  (2022)",
+        "Donation Amount  (2023)",
+        "Donation Amount  (2024)",
+        "Donation Amount  (2025)",
+        "Donation Amount  (2026)"
+      ]
+    },
+    {
+      "sheet": "Vendor - Normal Donors without ",
+      "table": "normal_donors_ndwn",
+      "include": true,
+      "id_prefix": "UID-NDWN",
+      "description": "Normal donors 'without ...' (tab name truncated in the source; NDWN prefix). Meaning to confirm (RAID D-07).",
+      "source_columns": [
+        "Unique ID",
+        "Address",
+        "Age",
+        "Donation Amount  (2019)",
+        "Donation Amount  (2020)",
+        "Donation Amount  (2021)",
+        "Donation Amount  (2022)",
+        "Donation Amount  (2023)",
+        "Donation Amount  (2024)",
+        "Donation Amount  (2025)",
+        "Donation Amount  (2026)"
+      ]
+    },
+    {
+      "sheet": "Sheet1",
+      "table": "normal_donors_ndwa",
+      "include": true,
+      "id_prefix": "UID-NDWA",
+      "description": "Untitled tab 'Sheet1' (NDWA prefix, no Address column). Meaning to confirm (RAID D-07).",
+      "source_columns": [
+        "Unique ID",
+        "Age",
+        "Donation Amount  (2019)",
+        "Donation Amount  (2020)",
+        "Donation Amount  (2021)",
+        "Donation Amount  (2022)",
+        "Donation Amount  (2023)",
+        "Donation Amount  (2024)",
+        "Donation Amount  (2025)",
+        "Donation Amount  (2026)"
+      ]
+    },
+    {
+      "sheet": "Vendor - OnBehalf Deceased Filt",
+      "table": "onbehalf_deceased",
+      "include": true,
+      "id_prefix": "UID-OBDF",
+      "description": "Donations made on behalf of deceased persons (filtered).",
+      "source_columns": [
+        "Unique ID",
+        "ReceiptNo",
+        "AGE",
+        "Address",
+        "Donation Amount  (2019)",
+        "Donation Amount  (2020)",
+        "Donation Amount  (2021)",
+        "Donation Amount  (2022)",
+        "Donation Amount  (2023)",
+        "Donation Amount  (2024)",
+        "Donation Amount  (2025)",
+        "Donation Amount  (2026)"
+      ]
+    },
+    {
+      "sheet": "Vendor - OnBehalf without NRIC",
+      "table": "onbehalf_without_nric",
+      "include": true,
+      "id_prefix": "UID-OBWN",
+      "description": "On-behalf donations without NRIC. 109 receipts also appear in onbehalf_without_address.",
+      "source_columns": [
+        "Unique ID",
+        "ReceiptNo",
+        "AGE",
+        "Address",
+        "Donation Amount  (2019)",
+        "Donation Amount  (2020)",
+        "Donation Amount  (2021)",
+        "Donation Amount  (2022)",
+        "Donation Amount  (2023)",
+        "Donation Amount  (2024)",
+        "Donation Amount  (2025)",
+        "Donation Amount  (2026)"
+      ]
+    },
+    {
+      "sheet": "Vendor - OnBehalf without Addre",
+      "table": "onbehalf_without_address",
+      "include": true,
+      "id_prefix": "UID-OBWA",
+      "description": "On-behalf donations without address. 109 receipts also appear in onbehalf_without_nric.",
+      "source_columns": [
+        "Unique ID",
+        "ReceiptNo",
+        "AGE",
+        "Donation Amount  (2019)",
+        "Donation Amount  (2020)",
+        "Donation Amount  (2021)",
+        "Donation Amount  (2022)",
+        "Donation Amount  (2023)",
+        "Donation Amount  (2024)",
+        "Donation Amount  (2025)",
+        "Donation Amount  (2026)"
+      ]
+    },
+    {
+      "sheet": "Vendor - Anonymous Donors",
+      "table": "anonymous_donors",
+      "include": true,
+      "id_prefix": "UID-AD",
+      "description": "Anonymous donations, one aggregate row per year. Blank and empty duplicate header columns in the sheet are ignored.",
+      "source_columns": [
+        "Unique ID",
+        "Donation Amount  (2019)",
+        "Donation Amount  (2020)",
+        "Donation Amount  (2021)",
+        "Donation Amount  (2022)",
+        "Donation Amount  (2023)",
+        "Donation Amount  (2024)",
+        "Donation Amount  (2025)",
+        "Donation Amount  (2026)"
+      ]
+    }
+  ]
+}

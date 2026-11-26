@@ -1,0 +1,42 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.18, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/claude/giveplease
+plugins: platformdirs-4.13.5, anyio-4.15.1
+collecting ... collected 33 items
+
+tests/test_sheet_to_csv.py::test_excel_date_serial_becomes_iso_date PASSED [  3%]
+tests/test_sheet_to_csv.py::test_real_date_cell_and_text_formats PASSED  [  6%]
+tests/test_sheet_to_csv.py::test_date_serial_arriving_as_text_in_csv PASSED [  9%]
+tests/test_sheet_to_csv.py::test_ambiguous_or_bad_date_is_rejected PASSED [ 12%]
+tests/test_sheet_to_csv.py::test_leading_zeros_survive_when_cell_is_text PASSED [ 15%]
+tests/test_sheet_to_csv.py::test_numeric_id_cell_is_flagged PASSED       [ 18%]
+tests/test_sheet_to_csv.py::test_id_prefix_mismatch_is_flagged PASSED    [ 21%]
+tests/test_sheet_to_csv.py::test_currency_formatting_is_cleaned[S$1,250.00-1250.00] PASSED [ 24%]
+tests/test_sheet_to_csv.py::test_currency_formatting_is_cleaned[$ 50-50.00] PASSED [ 27%]
+tests/test_sheet_to_csv.py::test_currency_formatting_is_cleaned[SGD 7.5-7.50] PASSED [ 30%]
+tests/test_sheet_to_csv.py::test_currency_formatting_is_cleaned[1\xa0000.10-1000.10] PASSED [ 33%]
+tests/test_sheet_to_csv.py::test_currency_formatting_is_cleaned[12.5 SGD-12.50] PASSED [ 36%]
+tests/test_sheet_to_csv.py::test_currency_formatting_is_cleaned[1250-1250.00] PASSED [ 39%]
+tests/test_sheet_to_csv.py::test_currency_formatting_is_cleaned[8016.75-8016.75] PASSED [ 42%]
+tests/test_sheet_to_csv.py::test_currency_formatting_is_cleaned[--] PASSED [ 45%]
+tests/test_sheet_to_csv.py::test_currency_formatting_is_cleaned[-] PASSED [ 48%]
+tests/test_sheet_to_csv.py::test_currency_formatting_is_cleaned[None-] PASSED [ 51%]
+tests/test_sheet_to_csv.py::test_accounting_negative_is_kept_and_flagged PASSED [ 54%]
+tests/test_sheet_to_csv.py::test_float_artefact_rounded_but_real_extra_decimals_rejected PASSED [ 57%]
+tests/test_sheet_to_csv.py::test_blank_cells_and_blank_rows PASSED       [ 60%]
+tests/test_sheet_to_csv.py::test_required_blank_is_rejected PASSED       [ 63%]
+tests/test_sheet_to_csv.py::test_age_policy[0--0-unknown] PASSED         [ 66%]
+tests/test_sheet_to_csv.py::test_age_policy[None---unknown] PASSED       [ 69%]
+tests/test_sheet_to_csv.py::test_age_policy[62-62-62-valid] PASSED       [ 72%]
+tests/test_sheet_to_csv.py::test_age_policy[62.0-62-62-valid] PASSED     [ 75%]
+tests/test_sheet_to_csv.py::test_age_policy[-952---952-out_of_range] PASSED [ 78%]
+tests/test_sheet_to_csv.py::test_age_policy[234--234-out_of_range] PASSED [ 81%]
+tests/test_sheet_to_csv.py::test_age_policy[110-110-110-valid] PASSED    [ 84%]
+tests/test_sheet_to_csv.py::test_fractional_age_is_rejected PASSED       [ 87%]
+tests/test_sheet_to_csv.py::test_address_dropped_by_default_and_loaded_when_enabled PASSED [ 90%]
+tests/test_sheet_to_csv.py::test_missing_column_fails PASSED             [ 93%]
+tests/test_sheet_to_csv.py::test_unknown_column_with_data_fails_but_empty_extra_columns_are_ignored PASSED [ 96%]
+tests/test_sheet_to_csv.py::test_csv_header_matches_generated_schema PASSED [100%]
+
+============================== 33 passed in 0.31s ==============================
