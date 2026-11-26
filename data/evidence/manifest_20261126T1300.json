@@ -1,0 +1,301 @@
+{
+  "load_id": "20261126T1300",
+  "source": "source/donor_data_aug2026.xlsx",
+  "map": "schemas/table_map.json",
+  "created_at": "2026-11-26T07:14:08Z",
+  "include_address": false,
+  "age_valid_range": [
+    1,
+    110
+  ],
+  "result": "PASS",
+  "tables": [
+    {
+      "table": "normal_donors",
+      "sheet": "Vendor - Normal Donors Export",
+      "csv": "normal_donors.csv",
+      "sha256": "6c559c02dfe2e3a98b4ba2b671245fb475704b63c528500f1c8b0d77fd98cbf6",
+      "source_rows": 45337,
+      "output_rows": 45337,
+      "rejected_rows": 0,
+      "blank_rows_skipped": 0,
+      "columns": [
+        "unique_id",
+        "age",
+        "age_raw",
+        "age_status",
+        "donation_amount_2019",
+        "donation_amount_2020",
+        "donation_amount_2021",
+        "donation_amount_2022",
+        "donation_amount_2023",
+        "donation_amount_2024",
+        "donation_amount_2025",
+        "donation_amount_2026",
+        "_source_row",
+        "_load_id"
+      ],
+      "ignored_columns": [
+        "Address"
+      ],
+      "age_status": {
+        "valid": 13919,
+        "unknown": 31415,
+        "out_of_range": 3
+      },
+      "warnings": {},
+      "problems": []
+    },
+    {
+      "table": "normal_donors_filtered",
+      "sheet": "Vendor - Normal Donors (Filtere",
+      "csv": "normal_donors_filtered.csv",
+      "sha256": "e0cd9742b1aba2b52f97835db5276f087b6bdeaad2e0cd87ac66d43f78c264c1",
+      "source_rows": 45337,
+      "output_rows": 45337,
+      "rejected_rows": 0,
+      "blank_rows_skipped": 0,
+      "columns": [
+        "unique_id",
+        "age",
+        "age_raw",
+        "age_status",
+        "donation_amount_2019",
+        "donation_amount_2020",
+        "donation_amount_2021",
+        "donation_amount_2022",
+        "donation_amount_2023",
+        "donation_amount_2024",
+        "donation_amount_2025",
+        "donation_amount_2026",
+        "_source_row",
+        "_load_id"
+      ],
+      "ignored_columns": [
+        "Address"
+      ],
+      "age_status": {
+        "valid": 13919,
+        "unknown": 31415,
+        "out_of_range": 3
+      },
+      "warnings": {},
+      "problems": []
+    },
+    {
+      "table": "normal_donors_ndwn",
+      "sheet": "Vendor - Normal Donors without ",
+      "csv": "normal_donors_ndwn.csv",
+      "sha256": "f355f1c060bfd10002bd9f8ff886d632b4db477d71d206739f89ac76c4394732",
+      "source_rows": 27592,
+      "output_rows": 27592,
+      "rejected_rows": 0,
+      "blank_rows_skipped": 0,
+      "columns": [
+        "unique_id",
+        "age",
+        "age_raw",
+        "age_status",
+        "donation_amount_2019",
+        "donation_amount_2020",
+        "donation_amount_2021",
+        "donation_amount_2022",
+        "donation_amount_2023",
+        "donation_amount_2024",
+        "donation_amount_2025",
+        "donation_amount_2026",
+        "_source_row",
+        "_load_id"
+      ],
+      "ignored_columns": [
+        "Address"
+      ],
+      "age_status": {
+        "unknown": 19111,
+        "valid": 8463,
+        "out_of_range": 18
+      },
+      "warnings": {},
+      "problems": []
+    },
+    {
+      "table": "normal_donors_ndwa",
+      "sheet": "Sheet1",
+      "csv": "normal_donors_ndwa.csv",
+      "sha256": "f91ca175264ebc8bd2ca11ea369d9409141c46def25c38cf1559800310939ffb",
+      "source_rows": 9356,
+      "output_rows": 9356,
+      "rejected_rows": 0,
+      "blank_rows_skipped": 0,
+      "columns": [
+        "unique_id",
+        "age",
+        "age_raw",
+        "age_status",
+        "donation_amount_2019",
+        "donation_amount_2020",
+        "donation_amount_2021",
+        "donation_amount_2022",
+        "donation_amount_2023",
+        "donation_amount_2024",
+        "donation_amount_2025",
+        "donation_amount_2026",
+        "_source_row",
+        "_load_id"
+      ],
+      "ignored_columns": [],
+      "age_status": {
+        "unknown": 8207,
+        "valid": 1149
+      },
+      "warnings": {},
+      "problems": []
+    },
+    {
+      "table": "onbehalf_deceased",
+      "sheet": "Vendor - OnBehalf Deceased Filt",
+      "csv": "onbehalf_deceased.csv",
+      "sha256": "6d0c0f124085a5d5792f3f06716a8c1a93e279c214e86466b6f99a516088c861",
+      "source_rows": 32,
+      "output_rows": 32,
+      "rejected_rows": 0,
+      "blank_rows_skipped": 0,
+      "columns": [
+        "unique_id",
+        "receipt_no",
+        "age",
+        "age_raw",
+        "age_status",
+        "donation_amount_2019",
+        "donation_amount_2020",
+        "donation_amount_2021",
+        "donation_amount_2022",
+        "donation_amount_2023",
+        "donation_amount_2024",
+        "donation_amount_2025",
+        "donation_amount_2026",
+        "_source_row",
+        "_load_id"
+      ],
+      "ignored_columns": [
+        "Address"
+      ],
+      "age_status": {
+        "unknown": 24,
+        "valid": 8
+      },
+      "warnings": {},
+      "problems": []
+    },
+    {
+      "table": "onbehalf_without_nric",
+      "sheet": "Vendor - OnBehalf without NRIC",
+      "csv": "onbehalf_without_nric.csv",
+      "sha256": "3d5138157209c3d6abfef11feed83dd481244563b5e08f49bddc420c11e520cc",
+      "source_rows": 147,
+      "output_rows": 147,
+      "rejected_rows": 0,
+      "blank_rows_skipped": 0,
+      "columns": [
+        "unique_id",
+        "receipt_no",
+        "age",
+        "age_raw",
+        "age_status",
+        "donation_amount_2019",
+        "donation_amount_2020",
+        "donation_amount_2021",
+        "donation_amount_2022",
+        "donation_amount_2023",
+        "donation_amount_2024",
+        "donation_amount_2025",
+        "donation_amount_2026",
+        "_source_row",
+        "_load_id"
+      ],
+      "ignored_columns": [
+        "Address"
+      ],
+      "age_status": {
+        "valid": 147
+      },
+      "warnings": {},
+      "problems": []
+    },
+    {
+      "table": "onbehalf_without_address",
+      "sheet": "Vendor - OnBehalf without Addre",
+      "csv": "onbehalf_without_address.csv",
+      "sha256": "199a7fee726915ab0e62a8e0a43124489be3b164928a420e95d4a3dca92f199b",
+      "source_rows": 146,
+      "output_rows": 146,
+      "rejected_rows": 0,
+      "blank_rows_skipped": 0,
+      "columns": [
+        "unique_id",
+        "receipt_no",
+        "age",
+        "age_raw",
+        "age_status",
+        "donation_amount_2019",
+        "donation_amount_2020",
+        "donation_amount_2021",
+        "donation_amount_2022",
+        "donation_amount_2023",
+        "donation_amount_2024",
+        "donation_amount_2025",
+        "donation_amount_2026",
+        "_source_row",
+        "_load_id"
+      ],
+      "ignored_columns": [],
+      "age_status": {
+        "valid": 131,
+        "unknown": 15
+      },
+      "warnings": {},
+      "problems": []
+    },
+    {
+      "table": "anonymous_donors",
+      "sheet": "Vendor - Anonymous Donors",
+      "csv": "anonymous_donors.csv",
+      "sha256": "46242b58c6fa3bf2e936321305db8e761dfd93aea6ae81bd4569d17ddc23eb22",
+      "source_rows": 1,
+      "output_rows": 1,
+      "rejected_rows": 0,
+      "blank_rows_skipped": 0,
+      "columns": [
+        "unique_id",
+        "donation_amount_2019",
+        "donation_amount_2020",
+        "donation_amount_2021",
+        "donation_amount_2022",
+        "donation_amount_2023",
+        "donation_amount_2024",
+        "donation_amount_2025",
+        "donation_amount_2026",
+        "_source_row",
+        "_load_id"
+      ],
+      "ignored_columns": [
+        "(blank header, column 10)",
+        "(blank header, column 11)",
+        "(blank header, column 12)",
+        "(blank header, column 13)",
+        "(blank header, column 14)",
+        "Donation Amount  (2019)",
+        "Donation Amount  (2020)",
+        "Donation Amount  (2021)",
+        "Donation Amount  (2022)",
+        "Donation Amount  (2023)",
+        "Donation Amount  (2024)",
+        "Donation Amount  (2025)",
+        "Donation Amount  (2026)"
+      ],
+      "age_status": {},
+      "warnings": {},
+      "problems": []
+    }
+  ]
+}

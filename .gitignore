@@ -13,3 +13,11 @@ terraform.tfvars
 
 # Keep the provider lock file under version control
 !.terraform.lock.hcl
+
+# Donor data never goes into git: source workbooks, per-tab CSVs and conversion output
+data/source/
+data/out/
+data/**/*.xlsx
+data/**/rejects.csv
+__pycache__/
+.pytest_cache/
