@@ -37,6 +37,8 @@ locals {
     "roles/storage.admin",           # landing bucket and its IAM
     "roles/bigquery.admin",          # datasets, tables and dataset IAM
     "roles/iam.serviceAccountAdmin", # loader service account
+    "roles/compute.networkAdmin",    # VPC, subnets, Cloud Router, Cloud NAT
+    "roles/compute.securityAdmin",   # firewall rules
   ])
 }
 

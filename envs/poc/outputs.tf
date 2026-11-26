@@ -20,3 +20,12 @@ output "loader_service_account_email" {
   description = "Email of the loader service account."
   value       = module.loader.email
 }
+
+output "network" {
+  description = "VPC network, subnets and NAT."
+  value = {
+    name    = module.network.network_name
+    subnets = module.network.subnets
+    nat     = module.network.nat_name
+  }
+}
