@@ -22,8 +22,7 @@ locals {
   repo_principal_set = "principalSet://iam.googleapis.com/${local.pool_name}/attribute.repository/${var.github_repository}"
 
   # Only jobs that run in the protected GitHub environment (used for apply).
-  apply_principal = "principal://iam.googleapis.com/${local.pool_name}/subject/repo:${var.github_repository}:environment:${var.github_environment}"
-
+  apply_principal = "principal://iam.googleapis.com/${local.pool_name}/subject/repo:${coalesce(var.github_oidc_subject_repo, var.github_repository)}:environment:${var.github_environment}"
   # Least-privilege roles for each CI identity on the project.
   plan_project_roles = toset([
     "roles/viewer",                            # read resources for refresh
@@ -38,6 +37,8 @@ locals {
     "roles/storage.admin",           # landing bucket and its IAM
     "roles/bigquery.admin",          # datasets, tables and dataset IAM
     "roles/iam.serviceAccountAdmin", # loader service account
+    "roles/compute.networkAdmin",    # VPC, subnets, Cloud Router, Cloud NAT
+    "roles/compute.securityAdmin",   # firewall rules
   ])
 }
 

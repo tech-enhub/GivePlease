@@ -110,3 +110,39 @@ variable "budget_currency" {
   type        = string
   default     = "USD"
 }
+
+# ---- Network ---------------------------------------------------------------------
+
+variable "network_name" {
+  description = "Name of the PoC VPC network. Subnets, router and NAT are named after it."
+  type        = string
+  default     = "gp-poc-vpc"
+}
+
+variable "main_subnet_cidr" {
+  description = "CIDR of the main private subnet."
+  type        = string
+  default     = "10.0.0.0/24"
+
+  validation {
+    condition     = can(cidrhost(var.main_subnet_cidr, 0))
+    error_message = "main_subnet_cidr must be a valid IPv4 CIDR."
+  }
+}
+
+variable "serverless_subnet_cidr" {
+  description = "CIDR of the subnet used by Cloud Run Direct VPC egress (/26 or larger)."
+  type        = string
+  default     = "10.0.1.0/26"
+
+  validation {
+    condition     = can(cidrhost(var.serverless_subnet_cidr, 0)) && try(tonumber(split("/", var.serverless_subnet_cidr)[1]) <= 26, false)
+    error_message = "serverless_subnet_cidr must be a valid IPv4 CIDR of /26 or larger."
+  }
+}
+
+variable "enable_nat" {
+  description = "Create Cloud Router and Cloud NAT for outbound-only internet access."
+  type        = bool
+  default     = true
+}

@@ -18,6 +18,7 @@ locals {
       "bigquerystorage.googleapis.com",
       "storage.googleapis.com",
       "iam.googleapis.com",
+      "compute.googleapis.com",
     ],
     var.enable_budget ? ["billingbudgets.googleapis.com"] : [],
   ))
