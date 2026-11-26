@@ -62,3 +62,9 @@ variable "provider_id" {
     error_message = "provider_id must be 4-32 lowercase letters, digits or hyphens."
   }
 }
+
+variable "github_oidc_subject_repo" {
+  description = "Repository part of the GitHub OIDC sub claim. The tech-enhub org uses the ID-based format owner@ownerId/repo@repoId. Leave null to use github_repository."
+  type        = string
+  default     = null
+}
